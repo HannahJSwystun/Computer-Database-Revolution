@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="test" pageWidth="2400" pageHeight="842" columnWidth="2360" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d46c1e67-9aac-4efe-a089-2b73e0c95721">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="528"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="DsCrossTab" uuid="c81df34c-27e8-40c7-a324-2beb2e00f385">
+		<queryString>
+			<![CDATA[select distinct
+company_id,
+introduced,
+discontinued,
+name
+from computer
+where company_id is not null and introduced is not null and discontinued is not null
+order by 1 asc]]>
+		</queryString>
+		<field name="company_id" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="introduced" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="discontinued" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="name" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="DsChart" uuid="b22d7ca4-c7bc-40a3-98a4-249d6d7334bc">
+		<queryString>
+			<![CDATA[select distinct
+company_id  as Id_Company,
+count(name) as Nb_Names
+from computer
+where company_id is not null and introduced is not null and discontinued is not null
+group by company_id]]>
+		</queryString>
+		<field name="Id_Company" class="java.lang.Long"/>
+		<field name="Nb_Names" class="java.lang.Long"/>
+	</subDataset>
+	<parameter name="param_ids" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="param_idsReplaceSQL" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[" in ('"+$P{param_ids}.replaceAll(";","','")+"')"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Play_ReportPath" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+
+*
+
+from computer
+
+where id $P!{param_idsReplaceSQL}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="introduced" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="discontinued" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="company_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="Virtuel Group" isReprintHeaderOnEachPage="true" keepTogether="true">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<staticText>
+					<reportElement uuid="ce3b9d34-d893-4af8-85af-43bddc6bf7a0" mode="Opaque" x="0" y="0" width="100" height="37" backcolor="#CCCCFF"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Code]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0f2af7b5-e914-435a-bff5-e7105efdc58e" mode="Opaque" x="100" y="0" width="179" height="37" backcolor="#CCCCFF"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="86a3c29d-a090-446f-8b45-442ac5e73807" mode="Opaque" x="279" y="0" width="174" height="37" backcolor="#CCCCFF"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4b8f7eea-6cb7-4ac5-a172-97a96e52b2e4" mode="Opaque" x="453" y="0" width="102" height="37" backcolor="#CCCCFF"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Company]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement uuid="363ca5cc-fa14-4fe2-a481-c78aca02f7fe" x="605" y="0" width="109" height="37"/>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="2of7" drawText="false" checksumRequired="false">
+						<jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+				<componentElement>
+					<reportElement uuid="96fa7ee5-e709-4b7d-b397-7ed54fb0ce75" x="760" y="0" width="200" height="37"/>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="PDF417" drawText="false" checksumRequired="false">
+						<jr:codeExpression><![CDATA[$F{id}]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="210" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8f4e6536-6cd5-4e0b-9383-00a302a1baee" x="256" y="96" width="504" height="20" forecolor="#0000FF"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{param_ids}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4dab6591-a3f4-4f51-9b06-01f7306fd6a9" x="256" y="76" width="504" height="20"/>
+				<textElement markup="none">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Id's Selected :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f0db96ae-2f02-423d-822b-74a5e87168d7" x="72" y="46" width="167" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="13" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Entry Params From Play !]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="868c306b-9edd-41e4-901c-5211215b26ee" x="0" y="128" width="760" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5" lineColor="#009999"/>
+					<bottomPen lineWidth="0.5" lineColor="#009999"/>
+					<rightPen lineWidth="0.0" lineColor="#33FFFF"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA["Play_ReportPath Parameter : "+$P{Play_ReportPath}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f0db96ae-2f02-423d-822b-74a5e87168d7" x="1" y="0" width="238" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[<< Principal Report >>]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="4be71241-552d-4fa1-b0f8-1c8fdd9e9caa" x="789" y="0" width="269" height="187"/>
+				<imageExpression><![CDATA[$P{Play_ReportPath} + "images/index.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="56">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2a2963d4-3ec3-4033-af74-a6db6441dede" x="0" y="0" width="100" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b15aa2d2-01e2-4d34-9dbd-1c4fb28d739a" x="100" y="0" width="179" height="20"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0acdfe8b-225e-43ca-9a54-684a90ad7390" x="279" y="0" width="174" height="20"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{introduced}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="bdc5a649-28ad-42e7-8ea8-52f9d6e3a481" x="453" y="0" width="102" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{company_id}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="cd90187e-3f4f-4489-a7b0-a275e3cb09ff" x="0" y="29" width="556" height="20"/>
+				<subreportParameter name="param_company">
+					<subreportParameterExpression><![CDATA[$F{company_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{Play_ReportPath} + "Sub_Report_Test.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9f33e95b-8c2e-4d24-a9ca-543ede4104df" x="436" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="f5953ab1-2f99-413e-97ad-18096d997e7b" x="516" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="598" splitType="Stretch">
+			<crosstab>
+				<reportElement uuid="eef693c2-ba65-4161-ae48-76fc0fa07f08" x="1" y="33" width="2350" height="58"/>
+				<crosstabDataset isDataPreSorted="true">
+					<dataset>
+						<datasetRun subDataset="DsCrossTab" uuid="31a0160f-69f3-4b19-9970-cb11be0d4347">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<rowGroup name="name" width="128">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{name}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="3d601d91-a28d-4e5a-8b90-2f54801693bb" style="Crosstab Data Text" x="0" y="0" width="128" height="25"/>
+								<box leftPadding="4"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{name}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="company_id" height="30">
+					<bucket class="java.lang.Long">
+						<bucketExpression><![CDATA[$F{company_id}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement uuid="8ce3b83b-e0cf-4542-92d0-af809c720c0b" style="Crosstab Data Text" x="0" y="0" width="175" height="30"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{company_id}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="introducedMeasure" class="java.sql.Timestamp">
+					<measureExpression><![CDATA[$F{introduced}]]></measureExpression>
+				</measure>
+				<crosstabCell width="175" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isBlankWhenNull="true">
+							<reportElement uuid="89b7787d-a5be-4c46-b20b-59575fdf44c9" style="Crosstab Data Text" x="0" y="0" width="175" height="25"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{introducedMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="name">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="63e6619e-77ee-4bfd-936d-5c8f46ee6c2a" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{introducedMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="company_id">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="3e65f66b-77ae-4ea2-89a1-fd6d97295d61" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{introducedMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="name" columnTotalGroup="company_id">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement uuid="cbdd2a8b-d25f-40b3-8029-aec1413697a3" style="Crosstab Data Text" x="0" y="0" width="50" height="25"/>
+							<textElement/>
+							<textFieldExpression><![CDATA[$V{introducedMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement uuid="f0db96ae-2f02-423d-822b-74a5e87168d7" positionType="Float" x="1" y="0" width="238" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[<< CrossTab Example >>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f0db96ae-2f02-423d-822b-74a5e87168d7" positionType="Float" x="1" y="108" width="238" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[<< Chart Example >>]]></text>
+			</staticText>
+			<scatterChart>
+				<chart renderType="image">
+					<reportElement uuid="ba2e7dec-c534-459b-b552-cf101437a3ee" positionType="Float" x="132" y="170" width="690" height="127"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Top"/>
+				</chart>
+				<xyDataset>
+					<dataset>
+						<datasetRun subDataset="DsChart" uuid="10b950f3-4f2b-4cd8-a3d7-8d97b2b3b3d2"/>
+					</dataset>
+					<xySeries>
+						<seriesExpression><![CDATA[$F{Id_Company}]]></seriesExpression>
+						<xValueExpression><![CDATA[$F{Id_Company}]]></xValueExpression>
+						<yValueExpression><![CDATA[$F{Nb_Names}]]></yValueExpression>
+					</xySeries>
+				</xyDataset>
+				<scatterPlot>
+					<plot/>
+				</scatterPlot>
+			</scatterChart>
+			<pie3DChart>
+				<chart>
+					<reportElement uuid="4d562ca5-08ec-4fa1-a2ee-0daa0b5f356c" positionType="Float" x="132" y="327" width="657" height="271"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="DsChart" uuid="ea3f1110-1606-484e-8c25-60770fbfa2ca"/>
+					</dataset>
+					<keyExpression><![CDATA[$F{Id_Company}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Nb_Names}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>

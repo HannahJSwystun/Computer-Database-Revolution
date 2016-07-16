@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Sub_Report_Test" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39c39dc2-0776-4dcc-8a2a-d94f038eb887">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.html.white.page.background" value="true"/>
+	<parameter name="param_company" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="param_companyCondition" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[($P{param_company}==null || $P{param_company}.equals("")) ? "0" : $P{param_company}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from company
+where id = $P{param_companyCondition}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="106" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="daef202b-d54b-465a-aeff-5edc82abd29d" mode="Opaque" x="156" y="86" width="215" height="20" backcolor="#00CCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6a094261-bfe1-4041-8bc1-7f8db1fd90f6" mode="Opaque" x="56" y="86" width="100" height="20" backcolor="#00CCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4dab6591-a3f4-4f51-9b06-01f7306fd6a9" x="29" y="38" width="504" height="20"/>
+				<textElement markup="none">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Id company sent from Principal Report to the Query of Sub Report is :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8f4e6536-6cd5-4e0b-9383-00a302a1baee" x="29" y="58" width="504" height="20" forecolor="#FF0000"/>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{param_company}==null || $P{param_company}.equals("")) ? "No Company id Linked to this Computer" : $P{param_company}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f0db96ae-2f02-423d-822b-74a5e87168d7" x="0" y="0" width="238" height="30"/>
+				<textElement verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[<< Sub Report >>]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a257155d-56ad-4696-8d48-6f5672f74acc" x="156" y="0" width="215" height="20"/>
+				<box leftPadding="4">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="fd863625-43c9-495e-87c7-dcc2bc3fbe59" x="56" y="0" width="100" height="20"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
