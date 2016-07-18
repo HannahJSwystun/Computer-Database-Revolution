@@ -413,7 +413,11 @@ public Result GenerateReport(String selected, String type)
            String reportfolder     =  "ReportTest/";
            String root_report_path =  Play.application().path()+"/reports/"+reportfolder;
            String reportname       =  "RapportJRXMLprincipal";
-           String exportpath       =  root_report_path +"/Generated/"+ currentSpecificDate();
+           String exportdir        =  root_report_path + "/Generated/";
+           String exportpath       =  exportdir + currentSpecificDate();
+
+           // verify paths for output
+           boolean completed = new File(exportdir).mkdirs(); // use value of completed if needed, mkdirs() will create all intermediary folders in the path
 
            HashMap<String, Object> params = new HashMap<String, Object>();  
            params.put("Play_ReportPath",root_report_path);
