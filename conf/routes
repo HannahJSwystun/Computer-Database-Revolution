@@ -33,6 +33,7 @@ DELETE	    /computers/:id			     controllers.HomeController.remove(id:Long)
 
 # Computers Custom Actions
 POST        /ComputersCustomActions      controllers.HomeController.checkbox()
+GET         /ComputersCustomActionsGet   controllers.HomeController.checkboxGet()
 
 
 

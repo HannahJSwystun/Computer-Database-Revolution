@@ -62,4 +62,13 @@ table.computers .header a {
     color: #666;
 }
 
+/* BOOTSTRAP MODALS */
+.modal {
+    top: 35%;
+    left: 35%;
+    display: none;
+}
 
+.file-modal {
+    width: 50%;
+}
