@@ -330,6 +330,67 @@ public Result checkbox()
 
 }
 
+    public Result checkboxGet()
+    {
+
+
+        String[] postAction = request().queryString().get("action");
+
+        String action = postAction[0];
+
+        if (postAction == null || postAction.length == 0)
+        {return badRequest("Veuillez selectionner une Action Valide");}
+
+        else
+        {
+
+  /* Actions With Params  */
+            String[] computers = request().queryString().get("computercode");
+
+            if (computers != null && ("PDF Report".equals(action) || "HTML Report".equals(action) || "XLS Report".equals(action) || "New Edit".equals(action))  )
+            {
+                String ids = ListUtils.mkString(computers, s -> "" + s, ";");
+                Logger.info("ids Selected are : "+ids);
+
+                switch (action)
+                {
+
+                    case     "PDF Report"       : return GenerateReport(ids,"pdf");
+                    case     "XLS Report"       : return GenerateReport(ids,"xls");
+                    case     "HTML Report"      : return GenerateReport(ids,"html");
+                    case     "New Edit"         : return EditNames(ids,"DELTA");
+                    default                     : return ok("default switch : Action <<"+action+">> avec Parametres Error>>");
+                }
+            }
+
+  /* Actions Without Params  */
+            else if (computers == null && ("PDF Report".equals(action) || "HTML Report".equals(action) || "XLS Report".equals(action) || "New Edit".equals(action))  )
+            {
+                return ok("Cette Action necessite au moins un parametre d'entré");
+            }
+
+
+            else
+            {
+                switch (action)
+                {
+
+
+                    case     "Add New"             : return Results.redirect(routes.HomeController.create());
+                    case     "Send Simple Mail"    : return SendSimpleEmail();
+                    case     "Send Complex Mail"   : return SendComplexEmail();
+                    case     "Open IMG File"       : return OpenIMGfile("./public/images/wall.jpg");
+                    default                           : return ok("default switch : Action <<"+action+">> sans Parametres Error>>");
+                }
+
+            }
+
+
+
+        }
+
+    }
+
 
 
 
@@ -413,7 +474,11 @@ public Result GenerateReport(String selected, String type)
            String reportfolder     =  "ReportTest/";
            String root_report_path =  Play.application().path()+"/reports/"+reportfolder;
            String reportname       =  "RapportJRXMLprincipal";
-           String exportpath       =  root_report_path +"/Generated/"+ currentSpecificDate();
+           String exportdir        =  root_report_path + "/Generated/";
+           String exportpath       =  exportdir + currentSpecificDate();
+
+           // verify paths for output
+           boolean completed = new File(exportdir).mkdirs(); // use value of completed if needed, mkdirs() will create all intermediary folders in the path
 
            HashMap<String, Object> params = new HashMap<String, Object>();  
            params.put("Play_ReportPath",root_report_path);
